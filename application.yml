@@ -1,115 +1,129 @@
-
 server:
-  port: 8080
-  address: 127.0.0.1
+port: 8080
+address: 127.0.0.1
 
 lavalink:
-  plugins:
-    - dependency: "dev.lavalink.youtube:youtube-plugin:1.18.2"
-      snapshot: false
+plugins:
+- dependency: "dev.lavalink.youtube:youtube-plugin:1.18.2"
+repository: "https://maven.lavalink.dev/releases"
 
-    - dependency: "com.github.topi314.lavasrc:lavasrc-plugin:4.8.3"
-      repository: "https://maven.lavalink.dev/releases"
-      snapshot: false
+```
+- dependency: "com.github.topi314.lavasrc:lavasrc-plugin:4.8.3"
+  repository: "https://maven.lavalink.dev/releases"
+```
 
-  server:
-    password: ${LAVALINK_SERVER_PASSWORD:change-this-in-render}
+server:
+password: ${LAVALINK_SERVER_PASSWORD:youshallnotpass}
 
-    sources:
-      # The YouTube plugin replaces Lavalink's built-in source.
-      youtube: false
-      bandcamp: true
-      soundcloud: true
-      twitch: true
-      vimeo: true
-      http: true
-      local: false
+```
+sources:
+  youtube: false
+  bandcamp: true
+  soundcloud: true
+  twitch: true
+  vimeo: true
+  http: true
+  local: false
 
-    filters:
-      volume: true
-      equalizer: true
-      karaoke: true
-      timescale: true
-      tremolo: true
-      vibrato: true
-      distortion: true
-      rotation: true
-      channelMix: true
-      lowPass: true
+filters:
+  volume: true
+  equalizer: true
+  karaoke: true
+  timescale: true
+  tremolo: true
+  vibrato: true
+  distortion: true
+  rotation: true
+  channelMix: true
+  lowPass: true
 
-    bufferDurationMs: 400
-    frameBufferDurationMs: 5000
-    opusEncodingQuality: ${OPUS_ENCODING_QUALITY:10}
-    resamplingQuality: LOW
-    trackStuckThresholdMs: ${TRACK_STUCK_THRESHOLD:10000}
-    useSeekGhosting: true
-    youtubePlaylistLoadLimit: ${YOUTUBE_PLAYLIST_LOAD_LIMIT:10}
-    playerUpdateInterval: 5
-    youtubeSearchEnabled: true
-    soundcloudSearchEnabled: true
-    gc-warnings: true
+bufferDurationMs: 400
+frameBufferDurationMs: 5000
+opusEncodingQuality: 10
+resamplingQuality: LOW
+trackStuckThresholdMs: 10000
+useSeekGhosting: true
+youtubePlaylistLoadLimit: 10
+playerUpdateInterval: 5
+youtubeSearchEnabled: true
+soundcloudSearchEnabled: true
+gc-warnings: true
+```
 
 plugins:
-  youtube:
-    enabled: true
-    allowSearch: true
-    allowDirectVideoIds: true
-    allowDirectPlaylistIds: true
+youtube:
+enabled: true
 
-    clients:
-      - MUSIC
-      - ANDROID_VR
-      - WEB
-      - WEBEMBEDDED
-      - TVHTML5_SIMPLY
+```
+# Enable YouTube OAuth authentication
+oauth:
+  enabled: true
 
-  lavasrc:
-    providers:
-      - 'ytsearch:"%ISRC%"'
-      - "ytsearch:%QUERY%"
+allowSearch: true
+allowDirectVideoIds: true
+allowDirectPlaylistIds: true
 
-    sources:
-      spotify: ${SPOTIFY_ENABLED:false}
-      applemusic: ${APPLE_MUSIC_ENABLED:false}
-      deezer: ${DEEZER_ENABLED:false}
-      yandexmusic: false
-      flowerytts: false
+# Clients to try when loading YouTube videos
+clients:
+  - ANDROID_VR
+  - WEB
+  - WEBEMBEDDED
+  - MUSIC
+  - TV
+  - TVHTML5_SIMPLY
+```
 
-    spotify:
-      clientId: ${SPOTIFY_CLIENT_ID:}
-      clientSecret: ${SPOTIFY_CLIENT_SECRET:}
-      countryCode: ${SPOTIFY_COUNTRY_CODE:US}
-      playlistLoadLimit: 10
-      albumLoadLimit: 10
+lavasrc:
+providers:
+- "ytsearch:"%ISRC%""
+- "ytsearch:%QUERY%"
 
-    applemusic:
-      countryCode: ${APPLE_MUSIC_COUNTRY_CODE:US}
-      mediaAPIToken: ${APPLE_MUSIC_API_TOKEN:}
-      playlistLoadLimit: 10
-      albumLoadLimit: 10
+```
+sources:
+  spotify: ${SPOTIFY_ENABLED:false}
+  applemusic: ${APPLE_MUSIC_ENABLED:false}
+  deezer: ${DEEZER_ENABLED:false}
+  yandexmusic: false
+  flowerytts: false
 
-    deezer:
-      masterDecryptionKey: ${DEEZER_MASTER_KEY:}
+spotify:
+  clientId: ${SPOTIFY_CLIENT_ID:}
+  clientSecret: ${SPOTIFY_CLIENT_SECRET:}
+  countryCode: ${SPOTIFY_COUNTRY_CODE:US}
+  playlistLoadLimit: 10
+  albumLoadLimit: 10
+
+applemusic:
+  countryCode: ${APPLE_MUSIC_COUNTRY_CODE:US}
+  mediaAPIToken: ${APPLE_MUSIC_API_TOKEN:}
+  playlistLoadLimit: 10
+  albumLoadLimit: 10
+
+deezer:
+  masterDecryptionKey: ${DEEZER_MASTER_KEY:}
+```
 
 metrics:
-  prometheus:
-    enabled: ${METRICS_ENABLED:true}
-    endpoint: /metrics
+prometheus:
+enabled: ${METRICS_ENABLED:true}
+endpoint: /metrics
 
 sentry:
-  dsn: "${SENTRY_DSN:}"
-  environment: "${ENVIRONMENT:production}"
+dsn: "${SENTRY_DSN:}"
+environment: "${ENVIRONMENT:production}"
 
 logging:
-  file:
-    path: ./logs/
+file:
+path: ./logs/
 
-  level:
-    root: WARN
-    lavalink: INFO
+level:
+root: INFO
+lavalink: INFO
+dev.lavalink.youtube: INFO
+dev.lavalink.youtube.http.YoutubeOauth2Handler: INFO
 
-  logback:
-    rollingpolicy:
-      max-history: 3
-      max-file-size: 5MB
-      total-size-cap: 25MB
+logback:
+rollingpolicy:
+max-history: 3
+max-file-size: 5MB
+total-size-cap: 25MB
