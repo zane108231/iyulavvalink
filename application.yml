@@ -6,37 +6,30 @@ lavalink:
 plugins:
 - dependency: "dev.lavalink.youtube:youtube-plugin:1.18.2"
 repository: "https://maven.lavalink.dev/releases"
-
-```
 - dependency: "com.github.topi314.lavasrc:lavasrc-plugin:4.8.3"
-  repository: "https://maven.lavalink.dev/releases"
-```
+repository: "https://maven.lavalink.dev/releases"
 
 server:
-password: ${LAVALINK_SERVER_PASSWORD:youshallnotpass}
-
-```
+password: "${LAVALINK_SERVER_PASSWORD:youshallnotpass}"
 sources:
-  youtube: false
-  bandcamp: true
-  soundcloud: true
-  twitch: true
-  vimeo: true
-  http: true
-  local: false
-
+youtube: false
+bandcamp: true
+soundcloud: true
+twitch: true
+vimeo: true
+http: true
+local: false
 filters:
-  volume: true
-  equalizer: true
-  karaoke: true
-  timescale: true
-  tremolo: true
-  vibrato: true
-  distortion: true
-  rotation: true
-  channelMix: true
-  lowPass: true
-
+volume: true
+equalizer: true
+karaoke: true
+timescale: true
+tremolo: true
+vibrato: true
+distortion: true
+rotation: true
+channelMix: true
+lowPass: true
 bufferDurationMs: 400
 frameBufferDurationMs: 5000
 opusEncodingQuality: 10
@@ -48,60 +41,45 @@ playerUpdateInterval: 5
 youtubeSearchEnabled: true
 soundcloudSearchEnabled: true
 gc-warnings: true
-```
 
 plugins:
 youtube:
 enabled: true
-
-```
-# Enable YouTube OAuth authentication
 oauth:
-  enabled: true
-
+enabled: true
 allowSearch: true
 allowDirectVideoIds: true
 allowDirectPlaylistIds: true
-
-# Clients to try when loading YouTube videos
 clients:
-  - ANDROID_VR
-  - WEB
-  - WEBEMBEDDED
-  - MUSIC
-  - TV
-  - TVHTML5_SIMPLY
-```
+- ANDROID_VR
+- WEB
+- WEBEMBEDDED
+- MUSIC
+- TV
+- TVHTML5_SIMPLY
 
 lavasrc:
 providers:
-- "ytsearch:"%ISRC%""
+- 'ytsearch:"%ISRC%"'
 - "ytsearch:%QUERY%"
-
-```
 sources:
-  spotify: ${SPOTIFY_ENABLED:false}
-  applemusic: ${APPLE_MUSIC_ENABLED:false}
-  deezer: ${DEEZER_ENABLED:false}
-  yandexmusic: false
-  flowerytts: false
-
+spotify: ${SPOTIFY_ENABLED:false}
+applemusic: ${APPLE_MUSIC_ENABLED:false}
+deezer: ${DEEZER_ENABLED:false}
+yandexmusic: false
+flowerytts: false
 spotify:
-  clientId: ${SPOTIFY_CLIENT_ID:}
-  clientSecret: ${SPOTIFY_CLIENT_SECRET:}
-  countryCode: ${SPOTIFY_COUNTRY_CODE:US}
-  playlistLoadLimit: 10
-  albumLoadLimit: 10
-
+clientId: ${SPOTIFY_CLIENT_ID:}
+clientSecret: ${SPOTIFY_CLIENT_SECRET:}
+countryCode: ${SPOTIFY_COUNTRY_CODE:US}
+playlistLoadLimit: 10
+albumLoadLimit: 10
 applemusic:
-  countryCode: ${APPLE_MUSIC_COUNTRY_CODE:US}
-  mediaAPIToken: ${APPLE_MUSIC_API_TOKEN:}
-  playlistLoadLimit: 10
-  albumLoadLimit: 10
-
+countryCode: ${APPLE_MUSIC_COUNTRY_CODE:US}
+mediaAPIToken: ${APPLE_MUSIC_API_TOKEN:}
+playlistLoadLimit: 10
 deezer:
-  masterDecryptionKey: ${DEEZER_MASTER_KEY:}
-```
+masterDecryptionKey: ${DEEZER_MASTER_KEY:}
 
 metrics:
 prometheus:
@@ -115,13 +93,11 @@ environment: "${ENVIRONMENT:production}"
 logging:
 file:
 path: ./logs/
-
 level:
 root: INFO
 lavalink: INFO
 dev.lavalink.youtube: INFO
 dev.lavalink.youtube.http.YoutubeOauth2Handler: INFO
-
 logback:
 rollingpolicy:
 max-history: 3
