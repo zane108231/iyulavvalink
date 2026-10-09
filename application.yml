@@ -1,29 +1,31 @@
+
 server:
   port: 8080
   address: 127.0.0.1
 
 lavalink:
-  # Plugins enabled
   plugins:
-    # YouTube Source Plugin - Mandatory for v4
-    - dependency: "dev.lavalink.youtube:youtube-plugin:1.17.0"
-    # LavaSrc - Adds support for Spotify, Apple Music, Deezer, and more
+    # YouTube Source Plugin
+    - dependency: "dev.lavalink.youtube:youtube-plugin:1.18.2"
+
+    # LavaSrc
     - dependency: "com.github.topi314.lavasrc:lavasrc-plugin:4.8.1"
       repository: "https://maven.lavalink.dev/releases"
-  
+
   server:
     password: ${LAVALINK_SERVER_PASSWORD:arbotixop007}
+
     sources:
-      youtube: true
+      # Use the YouTube plugin instead of the legacy source
+      youtube: false
       bandcamp: true
       soundcloud: true
       twitch: true
       vimeo: true
       http: true
       local: false
-    
+
     filters:
-      # Enable all audio filters
       volume: true
       equalizer: true
       karaoke: true
@@ -34,8 +36,7 @@ lavalink:
       rotation: true
       channelMix: true
       lowPass: true
-    
-    # Performance settings
+
     bufferDurationMs: 400
     frameBufferDurationMs: 5000
     opusEncodingQuality: ${OPUS_ENCODING_QUALITY:10}
@@ -48,9 +49,7 @@ lavalink:
     soundcloudSearchEnabled: true
     gc-warnings: true
 
-# Plugin configurations
 plugins:
-  # YouTube Source Plugin configuration
   youtube:
     enabled: true
     allowSearch: true
@@ -61,44 +60,34 @@ plugins:
       - ANDROID_TEST
       - WEB
       - TVHTML5EMBEDDED
-  
-  # LavaSrc configuration
+
   lavasrc:
     providers:
-      - "ytsearch:\"%ISRC%\""
+      - 'ytsearch:"%ISRC%"'
       - "ytsearch:%QUERY%"
+
     sources:
-      # Disable by default to prevent crashes if tokens are missing
       spotify: ${SPOTIFY_ENABLED:false}
       applemusic: ${APPLE_MUSIC_ENABLED:false}
       deezer: ${DEEZER_ENABLED:false}
       yandexmusic: false
       flowerytts: false
-    
+
     spotify:
       clientId: ${SPOTIFY_CLIENT_ID:""}
       clientSecret: ${SPOTIFY_CLIENT_SECRET:""}
       countryCode: ${SPOTIFY_COUNTRY_CODE:US}
       playlistLoadLimit: 10
       albumLoadLimit: 10
-    
+
     applemusic:
       countryCode: ${APPLE_MUSIC_COUNTRY_CODE:US}
       mediaAPIToken: ${APPLE_MUSIC_API_TOKEN:""}
       playlistLoadLimit: 10
       albumLoadLimit: 10
-    
+
     deezer:
       masterDecryptionKey: ${DEEZER_MASTER_KEY:""}
-#   
-#   # LavaSearch configuration
-#   lavasearch:
-#     sources:
-#       youtube: true
-#       soundcloud: true
-#       spotify: true
-#       applemusic: true
-#       deezer: true
 
 metrics:
   prometheus:
@@ -112,11 +101,12 @@ sentry:
 logging:
   file:
     path: ./logs/
-  
+
   level:
     root: WARN
     lavalink: INFO
-  
+    dev.lavalink.youtube: DEBUG
+
   logback:
     rollingpolicy:
       max-history: 3
